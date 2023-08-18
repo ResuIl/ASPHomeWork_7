@@ -1,5 +1,8 @@
 ﻿using ASPHomeWork_7.Models.ViewModels;
 using ASPHomeWork_7.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPHomeWork_7.Controllers;
@@ -52,5 +55,13 @@ public class AuthController : Controller
         }
 
         return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        Response.Cookies.Delete("auth");
+        return RedirectToAction("Index", "Home");
     }
 }
